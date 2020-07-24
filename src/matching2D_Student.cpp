@@ -3,7 +3,8 @@
 
 using namespace std;
 
-bool debugcomment = false;
+bool debugcomment = false
+;
 
 // Find best matches for keypoints in two camera images based on several matching methods
 void matchDescriptors(std::vector<cv::KeyPoint> &kPtsSource, std::vector<cv::KeyPoint> &kPtsRef, cv::Mat &descSource, cv::Mat &descRef,

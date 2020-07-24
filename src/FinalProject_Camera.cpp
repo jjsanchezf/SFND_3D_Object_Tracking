@@ -20,9 +20,11 @@
 #include "lidarData.hpp"
 #include "camFusion.hpp"
 
+#include "logger.hpp"
+
 using namespace std;
 
-bool debugcomments = true;
+bool debugcomments = false;
 
 /* MAIN PROGRAM */
 int main(int argc, const char *argv[])
@@ -107,7 +109,10 @@ int main(int argc, const char *argv[])
                 for (size_t imgIndex = 0; imgIndex <= imgEndIndex - imgStartIndex; imgIndex+=imgStepWidth)
                 {
                     if(image_number != 1)
-                        cout<<endl<<detectorList[i]<<":"<<descriptorList[j]<<":"<<"image "<<image_number -1<<" & "<<image_number<<":";//taking output
+                    {
+                        cout<<endl<<detectorList[i]<<";"<<descriptorList[j]<<";"<<"image "<<image_number -1<<" & "<<image_number<<";";//taking output
+                        logger('\n'+detectorList[i]+";"+descriptorList[j]+";"+"image "+std::to_string(image_number -1)+" & "+std::to_string(image_number)+";");
+                    }
                     image_number++;
                     /* LOAD IMAGE INTO BUFFER */
 
@@ -313,7 +318,7 @@ int main(int argc, const char *argv[])
                                 computeTTCCamera((dataBuffer.end() - 2)->keypoints, (dataBuffer.end() - 1)->keypoints, currBB->kptMatches, sensorFrameRate, ttcCamera);
                                 //// EOF STUDENT ASSIGNMENT
 
-                                bVis = true;
+                                bVis = false;
                                 if (bVis)
                                 {
                                     cv::Mat visImg = (dataBuffer.end() - 1)->cameraImg.clone();
@@ -347,6 +352,7 @@ int main(int argc, const char *argv[])
             dataBuffer.erase(dataBuffer.begin(), dataBuffer.end());
         } // eof loop over descriptor list
     } // eof loop over detector list
+
 
     return 0;
 }

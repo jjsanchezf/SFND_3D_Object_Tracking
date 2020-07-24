@@ -8,6 +8,8 @@
 #include "camFusion.hpp"
 #include "dataStructures.h"
 
+#include "logger.hpp"
+
 bool debugcommt = true;
 
 using namespace std;
@@ -232,7 +234,8 @@ void computeTTCCamera(std::vector<cv::KeyPoint> &kptsPrev, std::vector<cv::KeyPo
     double dT = 1 / frameRate;
     TTC = -dT / (1 - medDistRatio);
     if(debugcommt)
-            cout<<TTC<<":";
+        cout<<TTC<<";";
+    logger(std::to_string(TTC)+";");
 }
 
 
@@ -295,7 +298,9 @@ void computeTTCLidar(std::vector<LidarPoint> &lidarPointsPrev,
     TTC = meanXCur * (1.0 / frameRate) / diff;
     
   	if(debugcommt)
-            cout<<TTC<<":";
+        cout<<TTC<<";";
+    logger(std::to_string(TTC)+";");
+
 }
 
 
