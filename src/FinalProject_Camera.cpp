@@ -24,7 +24,8 @@
 
 using namespace std;
 
-bool debugcomments = false;
+bool debugcomments = true;
+bool saveimage = false;
 
 /* MAIN PROGRAM */
 int main(int argc, const char *argv[])
@@ -318,7 +319,7 @@ int main(int argc, const char *argv[])
                                 computeTTCCamera((dataBuffer.end() - 2)->keypoints, (dataBuffer.end() - 1)->keypoints, currBB->kptMatches, sensorFrameRate, ttcCamera);
                                 //// EOF STUDENT ASSIGNMENT
 
-                                bVis = false;
+                                bVis = true;
                                 if (bVis)
                                 {
                                     cv::Mat visImg = (dataBuffer.end() - 1)->cameraImg.clone();
@@ -327,14 +328,18 @@ int main(int argc, const char *argv[])
                                     
                                     char str[200];
                                     sprintf(str, "TTC Lidar : %f s, TTC Camera : %f s", ttcLidar, ttcCamera);
-                                    putText(visImg, str, cv::Point2f(80, 50), cv::FONT_HERSHEY_PLAIN, 2, cv::Scalar(0,0,255));
+                                    putText(visImg, str, cv::Point2f(80, 50), cv::FONT_HERSHEY_PLAIN, 2, cv::Scalar(0,0,255),2);
 
-                                    string windowName = "Final Results : TTC";
-                                    cv::namedWindow(windowName, 4);
-                                    cv::imshow(windowName, visImg);
+
+                                    if(saveimage)
+                                        cv::imwrite("../Output/"+detectorList[i]+"/"+descriptorList[j]+"/"+"image "+std::to_string(image_number -2)+"_"+std::to_string(image_number-1)+".jpg",visImg);
+                                    
                                     
                                     if(debugcomments)
                                     {
+                                        string windowName = "Final Results : TTC";
+                                        cv::namedWindow(windowName, 4);
+                                        cv::imshow(windowName, visImg);
                                         cout << "Press key to continue to next frame" << endl;
                                         cv::waitKey(0);
                                     }

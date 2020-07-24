@@ -4,7 +4,7 @@
 
 using namespace std;
 
-ofstream outFile("OutputData.txt");
+ofstream outFile("../Output/OutputData.txt");
 
 void logger(std::string logMsg)
 {
